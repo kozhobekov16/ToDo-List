@@ -3,7 +3,7 @@
     <div class="main">
       <div class="second">
         <h1 class="text-center text-4xl font-semibold">ToDo App</h1>
-        <div class="flex flex-col items-center">
+        <div class="inputBar">
           <input
             type="text"
             class="w-3/5 pl-2 p-2 mt-2 rounded text-gray-900 outline-none"
@@ -11,25 +11,29 @@
             v-on:keypress.enter="addTodo"
             placeholder="Type new todo"
           />
+          <button class="clearInput rounded" @click="clearInput">Clear</button>
         </div>
         <div>
           <div class="length">
             <p v-if="todos.length">ToDo List</p>
-            <p v-if="todos.length === 0">ToDo is Empty. Add a Todo list</p>
+            <p v-if="todos.length === 0">ToDo is Empty</p>
             <p>
               All ToDo Lists: <strong class="count">{{ todos.length }}</strong>
             </p>
           </div>
           <hr class="mt-2" />
-          <ul v-for="(todo, i) in todos" :key="i">
-            <li class="list">
-              <p>{{ i + 1 }})</p>
-              <p class="todo">{{ todo }}</p>
-              <button @click="deleteTodo(i)" class="removeItem rounded">
-                Remove
-              </button>
-            </li>
-          </ul>
+          <div>
+            <div v-if="todos.length === 0">ToDo is Empty. Add a Todo list</div>
+            <ul v-for="(todo, i) in todos" :key="i">
+              <li class="list">
+                <p>{{ i + 1 }})</p>
+                <p class="todo">{{ todo }}</p>
+                <button @click="deleteTodo(i)" class="removeItem rounded">
+                  Remove
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +44,7 @@ export default {
   name: "App",
   data() {
     return {
-      todos: ["name"],
+      todos: [],
       current: "",
     };
   },
@@ -54,6 +58,9 @@ export default {
     },
     deleteTodo(i) {
       this.todos.splice(i, 1);
+    },
+    clearInput() {
+      this.current = "";
     },
   },
 };
